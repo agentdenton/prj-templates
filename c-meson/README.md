@@ -1,14 +1,14 @@
-# Meson C project
+## Meson C project
 
-## Setup
+### Setup
 
-### Debug build:
+#### Debug build:
 ```
 meson setup build --buildtype debug
 ninja -C build
 ```
 
-### Release build:
+#### Release build:
 ```
 meson setup build --buildtype release
 ninja -C build
