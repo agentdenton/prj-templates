@@ -16,12 +16,12 @@ release_args = [
 build_args = [
   '-Wall',
   '-Wextra',
-  '-nostartfiles',
-  '-nostdlib'
 ]
 
 link_args = [
-  '-lgcc'
+  '-lgcc',
+  '-nostdlib',
+  '-nostartfiles',
 ]
 
 if get_option('buildtype') == 'debug'
@@ -38,12 +38,14 @@ c_sources = [
   'src/main.c'
 ]
 
+srcs = asm_sources + c_sources
+
 inc_dirs = include_directories(
   'src'
 )
 
 executable('app',
-  asm_sources + c_sources,
+  srcs,
   c_args: build_args,
   link_args: link_args,
   include_directories: inc_dirs
