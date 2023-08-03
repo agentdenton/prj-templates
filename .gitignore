@@ -1,3 +1,9 @@
 build
+
 arduino
 python
+
+esp-idf
+sdkconfig
+.cache
+.espressif
