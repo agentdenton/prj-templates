@@ -7,3 +7,9 @@ esp-idf
 sdkconfig
 .cache
 .espressif
+
+pico-sdk
+pico-examples
+picoprobe
+openocd
+micropython
