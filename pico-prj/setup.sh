@@ -40,7 +40,7 @@ if [[ -n $(docker ps -a | grep "$CONTAINER_NAME") ]]; then
 fi
 
 # create the image
-docker build --no-cache -t $IMG_NAME --build-arg USERNAME=$USERNAME .
+docker build -t $IMG_NAME --build-arg USERNAME=$USERNAME .
 
 # create the container
 docker create -it --privileged \
