@@ -11,5 +11,6 @@ sdkconfig
 pico-sdk
 pico-examples
 picoprobe
+picotool
 openocd
 micropython
