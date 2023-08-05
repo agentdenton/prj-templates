@@ -26,7 +26,7 @@ RUN apt-get install -y \
     gcc-arm-none-eabi \
     libnewlib-arm-none-eabi \
     libstdc++-arm-none-eabi-newlib \
-    build-essential
+    build-essential \
     automake \
     autoconf \
     texinfo \
@@ -45,29 +45,28 @@ RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
+ENV PICO_SDK_PATH="/home/$USERNAME/pico-sdk"
 
 # Enable man pages and help messages
 RUN yes | unminimize
 
-USER $USERNAME
 WORKDIR /home/$USERNAME
-
 COPY pico-sdk pico-sdk
 COPY picoprobe picoprobe
 COPY pico-examples pico-examples
 COPY openocd openocd
-COPY prep_env.sh prep_env.sh
 
-RUN cd openocd \
-    && ./bootstrap \
+WORKDIR /home/$USERNAME/openocd
+RUN ./bootstrap \
     && ./configure --enable-ftdi \
     && make -j$(nproc) \
-    && sudo make install
+    && make install
 
-RUN cd picoprobe \
-    && mkdir build \
-    && cd build \
-    && cmake .. \
-    && make -j$(nproc)
+WORKDIR /home/$USERNAME/picoprobe
+RUN mkdir -p build
 
-ENTRYPOINT ["bash", "-c", "source $HOME/prep_env.sh && exec bash"]
+WORKDIR /home/$USERNAME/picoprobe/build
+RUN cmake .. && make -j$(nproc)
+
+USER $USERNAME
+WORKDIR /home/$USERNAME
