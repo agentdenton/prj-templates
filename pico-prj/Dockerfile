@@ -50,23 +50,5 @@ ENV PICO_SDK_PATH="/home/$USERNAME/pico-sdk"
 # Enable man pages and help messages
 RUN yes | unminimize
 
-WORKDIR /home/$USERNAME
-COPY pico-sdk pico-sdk
-COPY picoprobe picoprobe
-COPY pico-examples pico-examples
-COPY openocd openocd
-
-WORKDIR /home/$USERNAME/openocd
-RUN ./bootstrap \
-    && ./configure --enable-ftdi \
-    && make -j$(nproc) \
-    && make install
-
-WORKDIR /home/$USERNAME/picoprobe
-RUN mkdir -p build
-
-WORKDIR /home/$USERNAME/picoprobe/build
-RUN cmake .. && make -j$(nproc)
-
 USER $USERNAME
 WORKDIR /home/$USERNAME

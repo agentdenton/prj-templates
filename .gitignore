@@ -14,3 +14,7 @@ picoprobe
 picotool
 openocd
 micropython
+
+.bash_history
+.lesshst
+.viminfo

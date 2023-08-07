@@ -46,7 +46,4 @@ RUN yes | unminimize
 USER $USERNAME
 WORKDIR /home/$USERNAME
 
-COPY esp-idf esp-idf
-RUN esp-idf/install.sh esp32
-
-ENTRYPOINT ["bash", "-c", "source /home/esp/esp-idf/export.sh && exec bash"]
+RUN echo "source $HOME/esp-idf/export.sh" >> /home/$USERNAME/.bashrc
