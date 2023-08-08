@@ -50,12 +50,9 @@ docker create -it --privileged \
 docker start $CONTAINER_NAME
 
 docker exec -u $USERNAME $CONTAINER_NAME \
-    bash -c "cd openocd && ./bootstrap && ./configure --enable-ftdi"
+    bash -c "cd openocd && ./bootstrap && ./configure --enable-ftdi && make -j$(nproc) && sudo make install"
 
 docker exec -u $USERNAME $CONTAINER_NAME \
-    bash -c "cd opencod && make -j$(nproc) && sudo make install"
-
-docker exec -u $USERNAME $CONTAINER_NAME \
-    bash -c "cd picoprobe && mkdir -p build && cd && make -j$(nproc)"
+    bash -c "cd picoprobe && mkdir -p build && cd build && cmake .. && make -j$(nproc)"
 
 docker stop $CONTAINER_NAME

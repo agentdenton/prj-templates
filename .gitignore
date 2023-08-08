@@ -16,5 +16,6 @@ openocd
 micropython
 
 .bash_history
+.bashrc
 .lesshst
 .viminfo
