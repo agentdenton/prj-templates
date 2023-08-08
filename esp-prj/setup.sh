@@ -30,6 +30,9 @@ docker create -it --privileged \
 docker start $CONTAINER_NAME
 
 docker exec -u $USERNAME $CONTAINER_NAME \
-    bash -c "cd esp-idf && install.sh esp32"
+    bash -c "esp-idf/install.sh esp32"
+
+docker exec -u $USERNAME $CONTAINER_NAME \
+    bash -c "echo source \$HOME/esp-idf/export.sh >> /home/$USERNAME/.bashrc"
 
 docker stop $CONTAINER_NAME

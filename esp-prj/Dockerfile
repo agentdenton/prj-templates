@@ -45,5 +45,3 @@ RUN yes | unminimize
 
 USER $USERNAME
 WORKDIR /home/$USERNAME
-
-RUN echo "source $HOME/esp-idf/export.sh" >> /home/$USERNAME/.bashrc
