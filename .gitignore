@@ -19,3 +19,8 @@ micropython
 .bashrc
 .lesshst
 .viminfo
+
+.cmake
+.wget-hsts
+zephyr-sdk*
+zephyrproject
