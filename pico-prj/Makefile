@@ -1,5 +1,5 @@
-BUILD_DIR := src/build
-BIN_PATH := $(BUILD_DIR)/app.elf
+BUILD_DIR := firmware/build
+BIN_PATH := $(BUILD_DIR)/firmware.elf
 
 .PHONY: all setup build flash debug clean
 

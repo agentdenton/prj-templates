@@ -1,17 +1,14 @@
 #!/bin/bash
 
-set -e
-set -u
+set -eu
 
 IMG_NAME="esp_dev_img"
 CONTAINER_NAME="esp_dev"
 
 USERNAME="esp"
-MOUNT_PATH="$(pwd)"
+MOUNT_DIR="$PWD"
 
-if [[ ! -d "$(pwd)/esp-idf" ]]; then
-    git clone --recursive https://github.com/espressif/esp-idf.git
-fi
+trap "echo 'Stopping...' && docker stop $CONTAINER_NAME" EXIT
 
 # remove previously created images
 if [[ -n $(docker ps -a | grep "$CONTAINER_NAME") ]]; then
@@ -24,15 +21,9 @@ docker build -t $IMG_NAME --build-arg USERNAME=$USERNAME .
 
 # create the container
 docker create -it --privileged \
-    --mount type=bind,source="$MOUNT_PATH",target=/home/$USERNAME \
+    --mount type=bind,source="$MOUNT_DIR",target=/home/$USERNAME \
     --name $CONTAINER_NAME $IMG_NAME
 
 docker start $CONTAINER_NAME
-
-docker exec -u $USERNAME $CONTAINER_NAME \
-    bash -c "esp-idf/install.sh esp32"
-
-docker exec -u $USERNAME $CONTAINER_NAME \
-    bash -c "echo source \$HOME/esp-idf/export.sh >> /home/$USERNAME/.bashrc"
-
+docker exec -u $USERNAME $CONTAINER_NAME bash -c "./setup_env.sh"
 docker stop $CONTAINER_NAME
